@@ -260,9 +260,9 @@ class App extends Component {
         <CookieKit
           cssAutoLoad={false}
           cookieHandler={this.onCookieConsentsChange}
-          privacyUrl="https://google.com/privacy"
+          privacyUrl="https://mysite.com/privacy"
           requestDataTypes={['advertising', 'application', 'statistics', 'usage']}
-          termsUrl="https://google.com/terms"
+          termsUrl="https://mysite.com/terms"
           textMessage={{
             "de-de": "Die Beschreibung.",
             "en-us": "The description.",

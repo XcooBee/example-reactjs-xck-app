@@ -6,10 +6,14 @@ For further information on the XCK please visit:
 - [ReactJS Documentation](https://www.xcoobee.com/docs/developer-documentation/plugins/reactjs-cookie-kit/)
 
 
+## Code
+
+The cookie kit component is first used in `App.js` with the `<CookieKit>` tag in `render()`
+
+
+## Available Commands
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-## Available Scripts
 
 ## installation
 
@@ -78,6 +82,4 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/ad
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
 
-### `npm run build` fails to minify
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify

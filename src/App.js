@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import CookieKit from 'react-cookie-kit';
 
 import 'react-cookie-kit/dist/xck-react.css';
@@ -8,8 +8,8 @@ import './App.css';
 import coffeeShopImg from "./assets/images/coffeeshop.jpg";
 import coffeeHouse2Img from "./assets/images/coffeehouse2.jpg";
 
-import googleAnalyticsSet from "./scripts/google_analytics_set.html";
-import googleAnalyticsUnset from "./scripts/google_analytics_unset.html";
+import googleAnalyticsSet from "./scripts/google_analytics_set.txt";
+import googleAnalyticsUnset from "./scripts/google_analytics_unset.txt";
 
 class App extends Component {
     /**
@@ -114,37 +114,59 @@ class App extends Component {
     xckLoadJs = (loadScripts) => {
         if (loadScripts.length > 0) {
             for (let i = 0; i < loadScripts.length; i++) {
-                const item = loadScripts[i];
-                const script = document.createElement("script");
+                fetch(loadScripts[i])
+                    .then(response => response.text())
+                    .then(loadScript => {
+                        const template = document.createElement("template");
 
-                if (item.src === "") {
-                    script.text = item.text;
-                } else {
-                    // load from file
-                    script.async = true; // we always load async
-                    script.src = item.src;
-                    script.onload = function () {
-                        console.log(`cookie script from ${item.src} is ready!`);
-                    };
+                        template.innerHTML = loadScript.trim(); // Never return a text node of whitespace as the result
 
-                    // other elements
-                    if (item.integrity !== "") {
-                        script.integrity = item.integrity;
-                    }
-                    if (item.crossOrigin !== "") {
-                        script.crossOrigin = item.crossOrigin;
-                    }
-                }
+                        const item = template.content.firstChild;
+                        const script = document.createElement("script");
 
-                // now append to document for execution
-                document.body.appendChild(script);
+                        if (!item.src) {
+                            script.text = item.text;
+                        } else {
+                            // load from file
+                            script.async = true; // we always load async
+                            script.src = item.src;
+                            script.onload = function () {
+                                console.log(`cookie script from ${item.src} is ready!`);
+                            };
+
+                            // other elements
+                            if (item.integrity) {
+                                script.integrity = item.integrity;
+                            }
+                            if (item.crossOrigin) {
+                                script.crossOrigin = item.crossOrigin;
+                            }
+                        }
+
+                        // now append to document for execution
+                        document.body.appendChild(script);
+                    });
             }
         }
     };
 
+    openMenu = (evt, menuName) => {
+        let i, x, tablinks;
+        x = document.getElementsByClassName("menu");
+        for (i = 0; i < x.length; i++) {
+            x[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tablink");
+        for (i = 0; i < x.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" w3-dark-grey", "");
+        }
+        document.getElementById(menuName).style.display = "block";
+        evt.currentTarget.firstElementChild.className += " w3-dark-grey";
+    };
+
     render() {
         return (
-            <React.Fragment>
+            <Fragment>
                 {/* Links (sit on top) */}
                 <div className="w3-top">
                     <div className="w3-row w3-padding w3-black">
@@ -170,7 +192,7 @@ class App extends Component {
                         <span className="w3-tag">Open from 6am to 5pm</span>
                     </div>
                     <div className="w3-display-middle w3-center">
-                        <span className="w3-text-white" style={{ "font-size": "90px" }}>the<br />Cafe</span>
+                        <span className="w3-text-white" style={{ fontSize: "90px" }}>the<br />Cafe</span>
                     </div>
                     <div className="w3-display-bottomright w3-center w3-padding-large">
                         <span className="w3-text-white">15 Adr street, 5015</span>
@@ -182,7 +204,7 @@ class App extends Component {
 
                     {/* About Container */}
                     <div className="w3-container" id="about">
-                        <div className="w3-content" style={{ "max-width": "700px" }}>
+                        <div className="w3-content" style={{ maxWidth: "700px" }}>
                             <h5 className="w3-center w3-padding-64"><span className="w3-tag w3-wide">ABOUT THE CAFE</span></h5>
                             <p>
                                 The Cafe was founded in blabla by Mr. Smith. This is a sample template from w3 schools we use to show the use of XcooBee Cookie Kit.
@@ -195,7 +217,7 @@ class App extends Component {
                                 <p><i>"Use products from nature for what it's worth - but never too early, nor too late." Fresh is the new sweet.</i></p>
                                 <p>Chef, Coffeeist and Owner: Liam Brown</p>
                             </div>
-                            <img alt="Coffee Shop" src={coffeeShopImg} style={{ width: "100%", "max-width": "1000px" }} className="w3-margin-top" />
+                            <img alt="Coffee Shop" src={coffeeShopImg} style={{ width: "100%", maxWidth: "1000px" }} className="w3-margin-top" />
                             <p><strong>Opening hours:</strong> everyday from 6am to 5pm.</p>
                             <p><strong>Address:</strong> 15 Adr street, 5015, NY</p>
                         </div>
@@ -203,15 +225,15 @@ class App extends Component {
 
                     {/* Menu Container */}
                     <div className="w3-container" id="menu">
-                        <div className="w3-content" style={{ "max-width": "700px" }}>
+                        <div className="w3-content" style={{ maxWidth: "700px" }}>
                             <h5 className="w3-center w3-padding-48"><span className="w3-tag w3-wide">THE MENU</span></h5>
                             <div className="w3-row w3-center w3-card w3-padding">
                                 {/* eslint-disable-next-line no-script-url, jsx-a11y/anchor-is-valid */}
-                                <a href="javascript:void(0)" onclick="openMenu(event, 'Eat');" id="myLink">
+                                <a href="javascript:void(0)" onClick={e => this.openMenu(e, 'Eat')} id="myLink">
                                     <div className="w3-col s6 tablink w3-dark-grey">Eat</div>
                                 </a>
                                 {/* eslint-disable-next-line no-script-url, jsx-a11y/anchor-is-valid */}
-                                <a href="javascript:void(0)" onclick="openMenu(event, 'Drinks');">
+                                <a href="javascript:void(0)" onClick={e => this.openMenu(e, 'Drinks')}>
                                     <div className="w3-col s6 tablink">Drink</div>
                                 </a>
                             </div>
@@ -249,32 +271,30 @@ class App extends Component {
                                 <h5>Soda</h5>
                                 <p className="w3-text-grey">Coke, Sprite, Fanta, etc. 2.50</p>
                             </div>
-                            <img alt="Coffee House" src={coffeeHouse2Img} style={{ width: "100%", "max-width": "1000px", "margin-top": "32px" }} />
+                            <img alt="Coffee House" src={coffeeHouse2Img} style={{ width: "100%", maxWidth: "1000px", marginTop: "32px" }} />
                         </div>
                     </div>
 
                     {/* Terms container */}
-                    <div className="w3-container" id="terms" style={{ "padding-bottom": "32px" }}>
-                        <div className="w3-content" style={{ "max-width": "700px" }}>
+                    <div className="w3-container" id="terms" style={{ paddingBottom: "32px" }}>
+                        <div className="w3-content" style={{ maxWidth: "700px" }}>
                             <h5 className="w3-center w3-padding-48"><span className="w3-tag w3-wide">OUR TERMS OF SERVICE</span></h5>
                             <p>Here are our current terms of service:</p>
                             <p>We serve you coffee and tea and other great products but if you act or do any of the following we will ask you to get lost:</p>
-                            <p>
-                                <ul>
-                                    <li>Don't be evil</li>
-                                    <li>Don't act criminally</li>
-                                    <li>Don't be a creep</li>
-                                    <li>Follow the golden rule</li>
-                                    <li>Clean up after yourself</li>
-                                    <li>Respect individuals of all shades and colors</li>
-                                </ul>
-                            </p>
+                            <ul>
+                                <li>Don't be evil</li>
+                                <li>Don't act criminally</li>
+                                <li>Don't be a creep</li>
+                                <li>Follow the golden rule</li>
+                                <li>Clean up after yourself</li>
+                                <li>Respect individuals of all shades and colors</li>
+                            </ul>
                         </div>
                     </div>
 
                     {/* privacy policy */}
-                    <div className="w3-container" id="privacy" style={{ "padding-bottom": "32px" }}>
-                        <div className="w3-content" style={{ "max-width": "700px" }}>
+                    <div className="w3-container" id="privacy" style={{ paddingBottom: "32px" }}>
+                        <div className="w3-content" style={{ maxWidth: "700px" }}>
                             <h5 className="w3-center w3-padding-48"><span className="w3-tag w3-wide">OUR PRIVACY POLICY</span></h5>
 
                             <p>We respect all our visitors privacy. To that end we will follow this privacy policy:</p>
@@ -398,7 +418,7 @@ class App extends Component {
                         "fr-fr": "La description.",
                     }}
                 />
-            </React.Fragment>
+            </Fragment>
         );
     }
 }

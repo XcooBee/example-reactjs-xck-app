@@ -1,7 +1,10 @@
+html, body, #root {
+  height: 100%;
+}
+
 body {
   margin: 0;
   padding: 0;
-  height: 100%;
   font-family: "Inconsolata", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -16,7 +19,7 @@ code {
   background-image: url("./assets/images/coffeehouse.jpg");
   background-position: center;
   background-size: cover;
-  min-height: 75%;
+  min-height: 50%;
 }
 
 .menu {

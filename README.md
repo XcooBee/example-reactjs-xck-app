@@ -8,7 +8,10 @@ For further information on the XCK please visit:
 
 ## Code
 
-The cookie kit component is first used in `App.js` with the `<CookieKit>` tag in `render()`
+The cookie kit component is first used in `App.js` with the `<CookieKit>` tag in `render()`.
+
+We use a wrapper component in `cookie_kit.jsx` to bundle our example cookie handler logic for the cookies for this site. 
+You can use managed cookie declaration instead in your apps and set cookies anywhere. See docs for more info on managed cookies.
 
 
 ## Available Commands

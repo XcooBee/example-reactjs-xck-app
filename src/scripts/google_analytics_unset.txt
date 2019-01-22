@@ -1,0 +1,4 @@
+<script>
+    console.log("cookie unset script has been called: a cleanup script should be run here.");
+    window['ga-disable-UA-XXXXX-Y'] = true;
+</script>

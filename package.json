@@ -5,7 +5,7 @@
   "dependencies": {
     "core-js": "^2.6.1",
     "react": "^16.7.0",
-    "react-cookie-kit": "^1.0.7",
+    "react-cookie-kit": "^1.0.9",
     "react-dom": "^16.7.0",
     "react-router-dom": "^4.3.1",
     "react-scripts": "^2.1.3"

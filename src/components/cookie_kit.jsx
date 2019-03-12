@@ -153,6 +153,7 @@ class CookieKitWrapper extends Component {
                 privacyUrl="http://localhost:3000/privacy"
                 termsUrl="http://localhost:3000/terms"
                 requestDataTypes={['advertising', 'application', 'statistics', 'usage']}
+                detectCountry={true}
                 textMessage={{
                     "de-de": "Die Beschreibung.",
                     "en-us": "The description.",

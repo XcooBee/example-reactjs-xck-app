@@ -8,10 +8,21 @@ For further information on the XCK please visit:
 
 ## Code
 
-The cookie kit component is first used in `App.js` with the `<CookieKit>` tag in `render()`.
+### init
 
-We use a wrapper component in `cookie_kit.jsx` to bundle our example cookie handler logic for the cookies for this site. 
-You can use managed cookie declaration instead in your apps and set cookies anywhere. See docs for more info on managed cookies.
+The cookie kit component is first used in `src/components/cookie_kit.jsx` with the `<CookieKit>` tag in `render()`. It is initialized in `App.js` via `import CookieKitWrapper from "./components/cookie_kit";`
+            
+
+### use
+
+We use a wrapper component in `cookie_kit.jsx` to bundle our example cookie handler logic for the cookies for this site.
+
+If you like for automatic management of cookies you can use managed cookie declarations. Otherwise you will have to declare a cookie handler and handle user-responses to cookie consent inquiries. See main documentation for further details.
+
+In this example the cookie handler is referenced with this line in init:
+`cookieHandler={this.onCookieConsentsChange}` in `cookie_kit.jsx`.
+
+
 
 
 ## Available Commands
